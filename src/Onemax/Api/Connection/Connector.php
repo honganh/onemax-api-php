@@ -2,10 +2,9 @@
 namespace Onemax\Api\Connection;
 
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Subscriber\Oauth\Oauth1;
 use GuzzleHttp\json_decode;
-use GuzzleHttp\Client;
-use Onemax\Api\Connection\OnemaxException; 
+use Onemax\Api\Connection\OnemaxException;
+use Onemax\Api\Connection\Client\ClientBase; 
 class Connector 
 {
 	/**
@@ -15,26 +14,9 @@ class Connector
 	 */
 	protected $client = null;
 
-	protected $configs = array(
-		'base_url'         => 'https://api.onemax.com.vn',
-		'consumer_key'     => '',
-		'consumer_secret'  => ''
-	);
-	public function __construct($configs = array() ) 
+	public function __construct(ClientBase $client ) 
 	{
-		$this->config = array_merge($this->configs, $configs);
-		
-		$args = [
-			'base_url' => $this->configs['base_url'], 
-			'headers'  => ['Content-Type' => 'application/json'],
-			'defaults' => ['auth' => 'oauth', 'verify'   => false] ,
-		];
-		$oauth = new Oauth1([
-			'consumer_key'    => $this->configs['consumer_key'],
-			'consumer_secret' => $this->configs['consumer_key'],
-		]);
-		$this->client = new Client($args);
-		$this->client->getEmitter()->attach($oauth);
+		$this->client = ($client != null) ? $client->getClient() : null;
 	}
 
 	public function post($url, $data = array() ) 

@@ -6,8 +6,11 @@ abstract class BaseClient {
 		'consumer_key'     => '',
 		'consumer_secret'  => ''
 	);
-	protected $client ;
+	protected $client =null;
 	protected function __construct( $configs ) {
 		$this->configs = array_merge($this->configs, $configs);
+	}
+	public function getClient() {
+		return $this->client;
 	}
 }

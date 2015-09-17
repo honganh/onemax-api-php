@@ -15,89 +15,19 @@ class Base extends Connector implements ConnectorInterface
 	protected $options= array();
 	public function __construct($config ) 
 	{
-		parent::__construct($config);
+		$client = new ClientCredential( $config );
+		parent::__construct($client);
 	}
 	// user
-	public function getListUser( &$error = null)
+	public function get( $url='', &$error = null)
 	{
-		$url = UrlBuilder::buildUrl(Config::get('api.user.list') );
-		return Decoder::parse($this->get($url, $this->header, $this->body, $this->options ), $error) ;
+		return Decoder::parse($this->get($url, array() ), $error) ;
 	}
-	public function getUserByUsername( $username , &$error)
+	public function post( $url='', $params=array(), &$error = null)
 	{
-		$url = UrlBuilder::buildUrl(Config::get('api.user.username'), array('username' => $username) );
-		return Decoder::parse( $this->get($url, $this->header, $this->body, $this->options ), $error) ;
+		$url = UrlBuilder::build( $url, $params );
+		return Decoder::parse($this->post($url, $params ), $error) ;
 	}
-	public function getUserByEmail( $email , &$error )
-	{
-		$url = UrlBuilder::buildUrl(Config::get('api.user.getbyemail'), array('email' => $email) );
-		return Decoder::parse($this->get($url, $this->header, $this->body, $this->options ), $error);
-	}
-	public function createUser( $email, $username, $password , &$error)
-	{
-		$url = UrlBuilder::buildUrl(Config::get('api.user.create') );
-		$body = array(
-			'email'        => $email,
-			'username'     => $username,
-			'password'     => $password, // password encrypt sha 256
-		);
-		return Decoder::parse( $this->post($url, $this->header, $body, $this->options ), $error) ;
-	}
-
-	// profile
-	public function getUserProfile( $userId, $provider='facebook', &$error )
-	{
-		$url = UrlBuilder::buildUrl(Config::get('api.user.profile'), array('uid' => $userId, 'provider' => $provider) );
-		return Decoder::parse( $this->get($url, $this->header, $this->body, $this->options ), $error) ;
-	}
-	public function getProfileByEmail( $email , &$error)
-	{
-		$url = UrlBuilder::buildUrl(Config::get('api.user.list_email'), array('email' => $email) );
-		return Decoder::parse( $this->get($url, $this->header, $this->body, $this->options ), $error) ;
-	}
-	public function getProfileByUsername( $username , &$error )
-	{
-		$url = UrlBuilder::buildUrl(Config::get('api.user.list_username' ), array('username' => $username ));
-		return Decoder::parse( $this->get($url, $this->header, $this->body, $this->options ), $error );
-	}
-	public function createProfile( $email, $username, $password= '',$first_name = '', $last_name = '', $display_name = '', $referrer = '')
-	{
-		$url = UrlBuilder::buildUrl(Config::get('api.user.create_profile' ) );
-		$body = array(
-			'email'        => $email,
-			'username'     => $username,
-			'password'     => $password, // password encrypt sha 256
-			'first_name'   => $first_name,
-			'last_name'    => $last_name,
-			'display_name' => $display_name,
-			'referrer'     => $referrer
-		);
-		return $this->post($url, $this->header, $body, $this->options );
-	}
-	
-	public function linkProfileByEmail( $email, &$error )
-	{
-		$url = UrlBuilder::buildUrl(Config::get('api.user.link_email') , array('email' => $email ) );
-		return Decoder::parse( $this->post($url, $this->header, $this->body, $this->options ), $error) ;
-	}
-	public function linkProfileByUsername( $username , &$error )
-	{
-		$url = UrlBuilder::buildUrl(Config::get('api.user.link_username' ) , array('username' => $username ) );
-		return Decoder::parse( $this->post($url, $this->header, $this->body, $this->options ), $error) ;
-	}
-
-	// game
-	public function getListGame( &$error)
-	{
-		$url = UrlBuilder::buildUrl(Config::get('api.game.list') );
-		return Decoder::parse( $this->get($url, $this->header, $this->body, $this->options ), $error) ;
-	}
-	public function getGame($gameId, &$error )
-	{
-		$url = UrlBuilder::buildUrl(Config::get('api.game.get' ), array('id' => $gameId ) );
-		return Decoder::parse( $this->get($url, $this->header, $this->body, $this->options), $error);
-	}
-	
 	public static function json_decode($json, $assoc = false, $depth = 512, $options = 0)
 	{
 		static $jsonErrors = array(
@@ -115,23 +45,6 @@ class Base extends Connector implements ConnectorInterface
             $last = json_last_error();
             return null;
         }
-
         return $data;
-	}
-	public function getData( $response ) {
-		if( ! isset($response) ) {
-			return false;
-		}
-		if( ! isset($response['result']['code']) || $response['result']['code'] != 200 ) {
-			return false;
-		}
-		if( ! isset($response['content']) ) {
-			return false;
-		}
-		$content = self::json_decode( $response['content'] );
-		if( ! isset($content->items ) ) {
-			return false;
-		}
-		return $content->items;
 	}
 }

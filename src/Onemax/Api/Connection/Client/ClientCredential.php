@@ -17,12 +17,12 @@ class ClientCredential extends ClientBase
 		    'scope'     => 'administration',
 		];
 
-		$token = new PasswordCredentials($oauth2Client, $config);
+		$token        = new PasswordCredentials($oauth2Client, $config);
 		$refreshToken = new RefreshToken($oauth2Client, $config);
 
 		$oauth2 = new Oauth2Subscriber($token, $refreshToken);
 
-		$client = new Client([
+		$this->client = new Client([
 		    'defaults' => [
 		        'auth' => 'oauth2',
 		        'subscribers' => [$oauth2],
