@@ -1,0 +1,38 @@
+{
+    "name": "honganh/onemax-api-php",
+    "type": "library",
+    "description": "Connect to onemax api",
+    "homepage": "http://api.onemax.com.vn/",
+    "license": "MIT",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/honganh/onemax-api-php.git"
+        }
+    ],
+    "authors": [
+        {
+            "name": "onemax dev team",
+            "email": "hotro@onemax.com.vn",
+            "homepage": "https://github.com/honganh"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "guzzlehttp/guzzle": "~6.0",
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "psr/log": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Onemax\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Onemax\\Tests\\": "tests/"
+        }
+    }
+}
