@@ -16,7 +16,7 @@ class Connector implements ConnectorInterface
 
 	public function __construct(ClientBase $client ) 
 	{
-		if( $client ! instanceof ClientBase ) {
+		if( ! $client instanceof ClientBase ) {
 			throw new OnemaxException('Client must be instance of class Onemax\Api\Connection\Client\ClientBase', 1);
 		}
 		$this->client = ($client != null) ? $client->getClient() : null;
