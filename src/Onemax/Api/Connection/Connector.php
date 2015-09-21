@@ -4,8 +4,9 @@ namespace Onemax\Api\Connection;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\json_decode;
 use Onemax\Api\Connection\OnemaxException;
-use Onemax\Api\Connection\Client\ClientBase; 
-class Connector 
+use Onemax\Api\Connection\Client\ClientBase;
+use Onemax\Api\Connection\ConnectorInterface;
+class Connector implements ConnectorInterface
 {
 	/**
 	 * Guzzle client
@@ -16,6 +17,9 @@ class Connector
 
 	public function __construct(ClientBase $client ) 
 	{
+		if( $client ! instanceof ClientBase ) {
+			throw new OnemaxException('Client must be instance of class Onemax\Api\Connection\Client\ClientBase', 1);
+		}
 		$this->client = ($client != null) ? $client->getClient() : null;
 	}
 

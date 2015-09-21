@@ -1,5 +1,5 @@
 <?php
-namespace Onemax\Api\Connection;
+namespace Onemax\Api\Connection\Untils;
 use Onemax\Api\Connection\OnemaxException;
 class Decoder 
 {

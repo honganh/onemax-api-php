@@ -3,12 +3,13 @@ namespace Onemax\Api\Connection;
 
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\json_decode;
-use Onemax\Api\Connection\UrlBuilder;
+use Onemax\Api\Connection\Untils\UrlBuilder;
+use Onemax\Api\Connection\Untils\Decoder;
 use Onemax\Api\Connection\Connector;
 use Onemax\Api\Connection\ConnectorInterface;
-use Onemax\Api\Connection\Decoder;
 
-class Base extends Connector implements ConnectorInterface 
+
+class Merchant extends Connector 
 {
 	protected $header = array();
 	protected $body   = array();
