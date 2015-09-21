@@ -4,7 +4,7 @@ namespace Onemax\Api\Connection\Connector;
 use GuzzleHttp\Exception\RequestException;
 use Onemax\Api\Connection\Exception\OnemaxException;
 use Onemax\Api\Connection\Client\ClientBase;
-use Onemax\Api\Connection\ConnectorInterface;
+use Onemax\Api\Connection\Connector\ConnectorInterface;
 class Connector implements ConnectorInterface
 {
 	/**

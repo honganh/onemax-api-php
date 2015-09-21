@@ -1,9 +1,10 @@
 <?php
+namespace Onemax\Api\Connection\Client;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
-class OAuth1 extends ClientBase{
+class Authentication extends ClientBase{
     public function __construct( $configs ){
         parent::__construct( $configs );
         
@@ -22,7 +23,7 @@ class OAuth1 extends ClientBase{
         $stack->push($middleware);
 
         $this->client = new Client([
-            'base_uri' => $remoteApiUrl,
+            'base_uri' => $this->configs['base_url'],
             'handler'  => $stack,
             'defaults' => [
                 'auth' => 'oauth',
