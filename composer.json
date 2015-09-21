@@ -28,7 +28,10 @@
     "autoload": {
         "psr-4": {
             "Onemax\\": "src/"
-        }
+        },
+        "classmap": [
+            "src/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

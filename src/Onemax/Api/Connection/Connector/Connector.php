@@ -1,5 +1,5 @@
 <?php
-namespace Onemax\Api\Connection;
+namespace Onemax\Api\Connection\Connector;
 
 use GuzzleHttp\Exception\RequestException;
 use Onemax\Api\Connection\Exception\OnemaxException;
@@ -41,9 +41,13 @@ class Connector implements ConnectorInterface
 	private function _errorDefault() {
 		$response = [
 			'result' => [
-				'status' => 'error', 'code' => 500, 'message' => 'Internal error',
-				'server' => $_SERVER['SERVER_ADDR'], 'time' => time(), 'version' => 1,
-				'errors' => []
+				'status'  => 'error', 
+				'code'    => 500, 
+				'message' => 'Internal error',
+				'server'  => $_SERVER['SERVER_ADDR'], 
+				'time'    => time(), 
+				'version' => 1,
+				'errors'  => []
 			]
 		];
 		return @json_encode($response);
