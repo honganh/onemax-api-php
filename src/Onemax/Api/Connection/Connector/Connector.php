@@ -2,8 +2,7 @@
 namespace Onemax\Api\Connection;
 
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\json_decode;
-use Onemax\Api\Connection\OnemaxException;
+use Onemax\Api\Connection\Exception\OnemaxException;
 use Onemax\Api\Connection\Client\ClientBase;
 use Onemax\Api\Connection\ConnectorInterface;
 class Connector implements ConnectorInterface
