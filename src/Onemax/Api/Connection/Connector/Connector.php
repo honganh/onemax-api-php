@@ -28,7 +28,7 @@ class Connector implements ConnectorInterface
 	}
 	public function get($url, $option = array() ) 
 	{
-		return $this->_request('get', $url, $data);
+		return $this->_request('get', $url, $option);
 	}
 	public function delete($url, $data = array() ) 
 	{
@@ -59,7 +59,7 @@ class Connector implements ConnectorInterface
 		$method = strtolower( trim($method) );
 		try 
 		{
-			$httpResponse = ($method == 'get') ? $this->client->{$method}($url,$data) : $this->client->{$method}($url,['body' => $data]);
+			$httpResponse = ($method == 'get') ? $this->client->{$method}($url,$options) : $this->client->{$method}($url,['body' => $options]);
 			$statusCode = $httpResponse->getStatusCode();
 			$body = $httpResponse->getBody();
 			$unreadBytes = $body->getMetadata()['unread_bytes'];
