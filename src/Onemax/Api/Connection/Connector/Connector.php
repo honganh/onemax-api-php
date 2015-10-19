@@ -44,7 +44,7 @@ class Connector implements ConnectorInterface
 				'status'  => 'error', 
 				'code'    => 500, 
 				'message' => 'Internal error',
-				'server'  => $_SERVER['SERVER_ADDR'], 
+				'server'  => isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1', 
 				'time'    => time(), 
 				'version' => 1,
 				'errors'  => []
@@ -59,7 +59,9 @@ class Connector implements ConnectorInterface
 		$method = strtolower( trim($method) );
 		try 
 		{
-			$httpResponse = ($method == 'get') ? $this->client->{$method}($url,$options) : $this->client->{$method}($url,['body' => $options]);
+			$httpResponse = ($method == 'get') ? 
+						$this->client->{$method}($url,$options) :
+						$this->client->{$method}($url,['form_params' => $options]);
 			$statusCode = $httpResponse->getStatusCode();
 			$body = $httpResponse->getBody();
 			$unreadBytes = $body->getMetadata()['unread_bytes'];
