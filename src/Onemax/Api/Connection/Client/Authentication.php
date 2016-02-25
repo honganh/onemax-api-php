@@ -5,8 +5,10 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 use Onemax\Api\Connection\Client\ClientBase;
-class Authentication extends ClientBase{
-    public function __construct( $configs ){
+class Authentication extends ClientBase
+{
+    public function __construct( $configs )
+    {
         parent::__construct( $configs );
         
         $handler = new CurlHandler();
